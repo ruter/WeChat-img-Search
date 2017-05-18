@@ -74,3 +74,8 @@ def wechat():
                     return reply.Message().send()
         except Exception as e:
             return e
+
+
+@app.route('/images/<res_key>', methods=['GET'])
+def images(res_key):
+    pass
