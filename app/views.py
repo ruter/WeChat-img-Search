@@ -7,8 +7,10 @@ from flask import url_for
 from flask import redirect
 from flask import render_template
 
+import receive
+import reply
+import handler
 from . import app, collection
-from . import receive
 
 
 @app.errorhandler(404)
@@ -45,4 +47,30 @@ def wechat():
         except Exception as e:
             return e
     else:
-        return 'hello, world'
+        try:
+            new_data = request.data
+            recv_msg = receive.parse_xml(new_data)
+            if isinstance(recv_msg, receive.Message):
+
+                if recv_msg.msg_type == 'text':
+                    content = recv_msg.content
+                    if content.strip().find('#') == 0:
+                        to_username = recv_msg.from_username
+                        from_username = recv_msg.to_username
+                        detail = handler.get_detail(content)
+                        if detail:
+                            reply_msg = reply.NewsMessage(to_username, from_username, **detail)
+                            return reply_msg.send()
+                        else:
+                            no_images_msg = u'ヾ(°д°)ノ゛系统表示找不到匹配关键词的图片，换个姿势再来一次吧！'
+                            reply_msg = reply.TextMessage(to_username, from_username, no_images_msg)
+                            return reply_msg.send()
+                    else:
+                        return reply.Message().send()
+
+                if recv_msg.msg_type == 'image':
+                    pass
+                else:
+                    return reply.Message().send()
+        except Exception as e:
+            return e

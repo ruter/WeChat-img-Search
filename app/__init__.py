@@ -17,6 +17,7 @@ app.config.from_pyfile('config.py')
 client = pymongo.MongoClient(app.config['DB_URI'])
 db = client[app.config['DB_NAME']]
 collection = db[app.config['DB_COLLECTION']]
+collection.create_index("createAt", expireAfterSeconds=10800)
 
 
 from app import views
