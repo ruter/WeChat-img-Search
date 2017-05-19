@@ -5,7 +5,7 @@ import time
 
 class Message(object):
     def __init__(self):
-        pass
+        self.__dict = dict()
 
     def send(self):
         return 'success'
@@ -20,7 +20,7 @@ class TextMessage(Message):
         self.__dict['content'] = content
 
     def send(self):
-        xml_form = """
+        xml_form = u"""
         <xml>
           <ToUserName><![CDATA[{to_username}]]></ToUserName>
           <FromUserName><![CDATA[{from_username}]]></FromUserName>
@@ -29,7 +29,8 @@ class TextMessage(Message):
           <Content><![CDATA[{content}]]></Content>
         </xml>
         """
-        return xml_form.format(**self.__dict)
+        detail = self.__dict
+        return xml_form.format(**detail)
 
 
 class ImageMessage(Message):
@@ -41,7 +42,7 @@ class ImageMessage(Message):
         self.__dict['media_id'] = media_id
 
     def send(self):
-        xml_form = """
+        xml_form = u"""
         <xml>
           <ToUserName><![CDATA[{to_username}]]></ToUserName>
           <FromUserName><![CDATA[{from_username}]]></FromUserName>
@@ -52,7 +53,8 @@ class ImageMessage(Message):
           </Image>
         </xml>
         """
-        return xml_form.format(**self.__dict)
+        detail = self.__dict
+        return xml_form.format(**detail)
 
 
 class NewsMessage(Message):
@@ -67,7 +69,7 @@ class NewsMessage(Message):
         self.__dict['url'] = url
 
     def send(self):
-        xml_form = """
+        xml_form = u"""
         <xml>
           <ToUserName><![CDATA[{to_username}]]></ToUserName>
           <FromUserName><![CDATA[{from_username}]]></FromUserName>
@@ -84,4 +86,5 @@ class NewsMessage(Message):
           </Articles>
         </xml>
         """
-        return xml_form.format(**self.__dict)
+        detail = self.__dict
+        return xml_form.format(**detail)

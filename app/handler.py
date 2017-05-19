@@ -15,8 +15,8 @@ def get_detail(content):
         hash_code = get_hash_code(keywords)
         return {
             'title': u'搜索关于{0}的图片'.format(u'、'.join(keywords)),
-            'desctiption': u'点击查看包含关键词「{0}」的图片(｡・`ω´・)'.format(u'、'.join(keywords)),
-            'pic_url': res['hits'][0]['webformatURL'],
+            'description': u'点击查看包含关键词「{0}」的图片(｡・`ω´・)'.format(u'、'.join(keywords)),
+            'pic_url': res['resVal']['hits'][0]['webformatURL'],
             'url': app.config['SITE_URL'] + hash_code
         }
     else:
@@ -42,7 +42,7 @@ def request_resource(keywords, hash_code):
     response = requests.get(req_url)
     res = response.json()
     if res['totalHits'] > 0:
-        collection.insert_one({'resKey': hash_code, 'resVal': res, 'createAt': datetime.datetime.utcnow()})
+        res = collection.insert_one({'resKey': hash_code, 'resVal': res, 'createAt': datetime.datetime.utcnow()})
         return res
     else:
         return None

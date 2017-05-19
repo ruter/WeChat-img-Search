@@ -59,7 +59,8 @@ def wechat():
                         from_username = recv_msg.to_username
                         detail = handler.get_detail(content)
                         if detail:
-                            reply_msg = reply.NewsMessage(to_username, from_username, **detail)
+                            reply_msg = reply.NewsMessage(to_username, from_username, detail['title'],
+                                                          detail['description'], detail['pic_url'], detail['url'])
                             return reply_msg.send()
                         else:
                             no_images_msg = u'ヾ(°д°)ノ゛系统表示找不到匹配关键词的图片，换个姿势再来一次吧！'
