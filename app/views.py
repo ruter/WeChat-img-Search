@@ -79,4 +79,8 @@ def wechat():
 
 @app.route('/images/<res_key>', methods=['GET'])
 def images(res_key):
-    pass
+    res = collection.find_one({'resKey': res_key})
+    if res:
+        return render_template('index.html', {'res': res['resVal']['hits']})
+    else:
+        return render_template('empty.html')

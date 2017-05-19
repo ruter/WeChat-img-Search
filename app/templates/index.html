@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>iTNK - 图搜</title>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+</head>
+<body>
+<ul data-am-widget="gallery" class="am-gallery am-avg-sm-3
+    am-avg-md-3 am-avg-lg-4 am-gallery-bordered" data-am-gallery="{ pureview: true }">
+    {% for img in res %}
+        <li>
+            <div class="am-gallery-item">
+                <a href="#">
+                    <img src="{{ img.previewURL }}"
+                         data-rel="{{ img.webformatURL }}"
+                         alt="{{ ' '.join(img.tags) }}"/>
+                    <h3 class="am-gallery-title">
+                        {%- for tag in img.tags -%}
+                            <span class="am-badge am-badge-secondary am-radius">{{ tag }}</span>
+                        {%- endfor -%}
+                    </h3>
+                    <div class="am-gallery-desc">
+                        <span><i class="am-icon-heart"></i> {{ img.likes }}</span>
+                        <span><i class="am-icon-eye"></i> {{ img.views }}</span>
+                        <span><i class="am-icon-comment"></i> {{ img.comments }}</span>
+                    </div>
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+</body>
+</html>
