@@ -9,9 +9,9 @@ def parse_xml(data):
     xml_data = ET.fromstring(data)
     msg_type = xml_data.find('MsgType').text
     if msg_type == 'text':
-        return TextMessage(data)
+        return TextMessage(xml_data)
     elif msg_type == 'image':
-        return ImageMessage(data)
+        return ImageMessage(xml_data)
 
 
 class Message(object):
