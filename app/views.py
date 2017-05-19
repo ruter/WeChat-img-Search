@@ -81,6 +81,6 @@ def wechat():
 def images(res_key):
     res = collection.find_one({'resKey': res_key})
     if res:
-        return render_template('index.html', {'res': res['resVal']['hits']})
+        return render_template('index.html', res = res['resVal']['hits'])
     else:
         return render_template('empty.html')

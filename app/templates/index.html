@@ -12,24 +12,26 @@
     <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
 </head>
 <body>
-<ul data-am-widget="gallery" class="am-gallery am-avg-sm-3
-    am-avg-md-3 am-avg-lg-4 am-gallery-bordered" data-am-gallery="{ pureview: true }">
+<ul data-am-widget="gallery" id="we-imgs"
+    class="am-gallery am-avg-sm-2 am-avg-md-2 am-avg-lg-4 am-gallery-bordered"
+    data-am-gallery="{ pureview: { weChatImagePreview: false } }">
     {% for img in res %}
-        <li>
+        <li class="we-img">
             <div class="am-gallery-item">
                 <a href="#">
                     <img src="{{ img.previewURL }}"
                          data-rel="{{ img.webformatURL }}"
-                         alt="{{ ' '.join(img.tags) }}"/>
+                         alt="{{ img.tags }}"
+                         style="max-height: 90px;"/>
                     <h3 class="am-gallery-title">
-                        {%- for tag in img.tags -%}
-                            <span class="am-badge am-badge-secondary am-radius">{{ tag }}</span>
+                        {% set tags = img.tags.split(',') %}
+                        {%- for tag in tags -%}
+                            <span class="am-badge am-badge-secondary am-radius">{{ tag.strip() }}</span>
                         {%- endfor -%}
                     </h3>
-                    <div class="am-gallery-desc">
-                        <span><i class="am-icon-heart"></i> {{ img.likes }}</span>
-                        <span><i class="am-icon-eye"></i> {{ img.views }}</span>
-                        <span><i class="am-icon-comment"></i> {{ img.comments }}</span>
+                    <div class="am-gallery-desc am-cf">
+                        <span class="am-fl"><i class="am-icon-heart" style="color: #DD514C"></i> {{ img.likes }}</span>
+                        <span class="am-fr"><i class="am-icon-eye"></i> {{ img.views }}</span>
                     </div>
                 </a>
             </div>
@@ -38,5 +40,14 @@
 </ul>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+{#<script src="https://cdn.bootcss.com/masonry/4.2.0/masonry.pkgd.min.js"></script>#}
+{#<script>#}
+{#    $(document).ready(function () {#}
+{#        $('#we-imgs').masonry({#}
+{#            itemSelector: '.we-img',#}
+{#            columnWidth: window.width * 0.2#}
+{#        });#}
+{#    });#}
+{#</script>#}
 </body>
 </html>
