@@ -1,0 +1,54 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>图搜 - iTNK</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+    <style>
+        .footer p {
+            color: #7F8C8D;
+            background-color: #2D3E50;
+        }
+
+        .footer-fixed {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .footer-fixed p {
+            margin: 0;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+{% block main %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+{% block script %}
+
+{% endblock %}
+{#<script src="https://cdn.bootcss.com/masonry/4.2.0/masonry.pkgd.min.js"></script>#}
+{#<script>#}
+{#    $(document).ready(function () {#}
+{#        $('#we-imgs').masonry({#}
+{#            itemSelector: '.we-img',#}
+{#            columnWidth: window.width * 0.2#}
+{#        });#}
+{#    });#}
+{#</script>#}
+</body>
+</html>

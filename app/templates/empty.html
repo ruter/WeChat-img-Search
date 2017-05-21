@@ -1,15 +1,22 @@
-<!doctype html>
-<html class="no-js">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
-    <title>iTNK - 图搜</title>
-</head>
-<body>
-<p>EXPIRED!</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="am-g am-container">
+        <div class="am-u-sm-12">
+            <div class="am-text-center am-margin-vertical-xl">
+                <span class="am-icon-btn am-danger am-icon-bolt am-icon-lg"></span>
+                <p>查找的资源已过期或不存在，请重试！</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('.footer').addClass('footer-fixed');
+    </script>
+{% endblock %}
