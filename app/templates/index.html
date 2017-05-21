@@ -16,7 +16,7 @@
                             <h3 class="am-gallery-title">
                                 {% set tags = img.tags.split(',') %}
                                 {%- for tag in tags -%}
-                                    <span class="am-badge am-badge-secondary am-radius">{{ tag.strip() }}</span>
+                                    <span>{{ tag.strip() }} </span>
                                 {%- endfor -%}
                             </h3>
                             <div class="am-gallery-desc am-cf">

@@ -53,21 +53,22 @@ def wechat():
             if isinstance(recv_msg, receive.Message):
 
                 if recv_msg.msg_type == 'text':
-                    content = recv_msg.content
-                    if content.strip().find('#') == 0:
-                        to_username = recv_msg.from_username
-                        from_username = recv_msg.to_username
+                    to_username = recv_msg.from_username
+                    from_username = recv_msg.to_username
+                    content = recv_msg.content.strip()
+                    if content.find('#') == 0:
                         detail = handler.get_detail(content)
-                        if detail:
-                            reply_msg = reply.NewsMessage(to_username, from_username, detail['title'],
-                                                          detail['description'], detail['pic_url'], detail['url'])
-                            return reply_msg.send()
-                        else:
-                            no_images_msg = u'ヾ(°д°)ノ゛系统表示找不到匹配关键词的图片，换个姿势再来一次吧！'
-                            reply_msg = reply.TextMessage(to_username, from_username, no_images_msg)
-                            return reply_msg.send()
+                        reply_msg = reply.NewsMessage(to_username, from_username, detail['title'],
+                                                      detail['description'], detail['pic_url'], detail['url'])
+                        return reply_msg.send()
+                    elif content in app.config['MENU_KEYS']:
+                        help_msg = u'使用图片搜索服务，只需要发送「# + 关键词」就可以GET到图片啦(ゝ∀･)b\n\n支持多个关键词搜索，只需要用空格分隔即可，如:\n\n#美食 水果'
+                        reply_msg = reply.TextMessage(to_username, from_username, help_msg)
+                        return reply_msg.send()
                     else:
-                        return reply.Message().send()
+                        menu_msg = u'回复以下任一关键词可以获得帮助信息哦(〃∀〃)\n\n「菜单」「帮助」「说明」「使用」「menu」「help」'
+                        reply_msg = reply.TextMessage(to_username, from_username, menu_msg)
+                        return reply_msg.send()
 
                 if recv_msg.msg_type == 'image':
                     pass
@@ -81,6 +82,6 @@ def wechat():
 def images(res_key):
     res = collection.find_one({'resKey': res_key})
     if res:
-        return render_template('index.html', res = res['resVal']['hits'])
+        return render_template('index.html', res=res['resVal']['hits'])
     else:
         return render_template('empty.html')

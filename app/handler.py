@@ -3,6 +3,7 @@
 import hashlib
 import requests
 import datetime
+import thread
 
 from . import app
 from . import collection
@@ -10,17 +11,18 @@ from . import collection
 
 def get_detail(content):
     res = get_resource(content)
+    keywords = get_keywords(content)
+    hash_code = get_hash_code(keywords)
+    detail = {
+        'title': u'搜索关于{0}的图片'.format(u'、'.join(keywords)),
+        'description': u'点击查看包含关键词「{0}」的图片(｡・`ω´・)'.format(u'、'.join(keywords)),
+        'url': app.config['SITE_URL'] + hash_code
+    }
     if res:
-        keywords = get_keywords(content)
-        hash_code = get_hash_code(keywords)
-        return {
-            'title': u'搜索关于{0}的图片'.format(u'、'.join(keywords)),
-            'description': u'点击查看包含关键词「{0}」的图片(｡・`ω´・)'.format(u'、'.join(keywords)),
-            'pic_url': res['resVal']['hits'][0]['webformatURL'],
-            'url': app.config['SITE_URL'] + hash_code
-        }
+        detail['pic_url'] = res['resVal']['hits'][0]['webformatURL']
     else:
-        return None
+        detail['pic_url'] = app.config['NEWS_IMG']
+    return detail
 
 
 def get_resource(content):
@@ -29,7 +31,10 @@ def get_resource(content):
     # Find resource in collection
     res = collection.find_one({'resKey': hash_code})
     if not res:
-        res = request_resource(keywords, hash_code)
+        try:
+            thread.start_new_thread(request_resource, (keywords, hash_code))
+        except Exception as e:
+            return None
     return res
 
 
